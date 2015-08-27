@@ -2,6 +2,6 @@ package entidades;
 
 public class Persona {
 	
-	String Nombre;
-
+	private String Nombre;
+	
 }

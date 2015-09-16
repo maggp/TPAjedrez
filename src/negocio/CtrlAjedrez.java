@@ -11,7 +11,6 @@ public class CtrlAjedrez {
 	private Partida partida;
 	
 	public Jugador identificarJugador(int dni) {
-		// TODO Auto-generated method stub
-		return null;
+		return dj.getByDni(dni);
 	}
 }

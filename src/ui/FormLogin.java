@@ -6,19 +6,27 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import entidades.Jugador;
+import negocio.CtrlAjedrez;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class FormLogin extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtJugador1;
 	private JTextField txtJugador2;
+	private CtrlAjedrez controlador;
 
 	/**
 	 * Launch the application.
@@ -61,6 +69,12 @@ public class FormLogin extends JFrame {
 		txtJugador2.setColumns(10);
 		
 		JButton btnJugar = new JButton("Jugar");
+		btnJugar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				btnJugar_click();
+			}
+		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -97,6 +111,31 @@ public class FormLogin extends JFrame {
 					.addContainerGap(23, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
+		
+		controlador= new CtrlAjedrez();
+	}
+
+	protected void btnJugar_click() {
+		Jugador j1,j2;
+		String mensaje="";
+		//j1 = controlador.identificarJugador(Integer.parseInt(this.txtJugador1.getText()));
+		j1= new Jugador();
+		if(j1==null){
+			mensaje+="No se encontro jugador con el DNI nro. 1\n";
+		}
+		else{
+			j2= controlador.identificarJugador(Integer.parseInt(this.txtJugador2.getText()));
+			if(j2==null){
+				mensaje+= "No se enconto jugador con el DNI nro. 2\n";
+			}
+		}
+		
+		if (mensaje.trim().isEmpty()) {
+			//pedirle al controlador que busque en la base de datos haber si existe un partida o si se debe crear una nueva
+		}
+		else{
+			JOptionPane.showMessageDialog(null, mensaje, "Error al buscar jugadores", JOptionPane.INFORMATION_MESSAGE);
+		}
 	}
 
 }

@@ -2,7 +2,9 @@ package entidades;
 
 public class Jugador {
 	
-	private String Nombre;
-	//Probandoooo
+	private String nombre;
+	private int dni;
+	private String apellido;
+	private String color; //Ver si va o no
 	
 }

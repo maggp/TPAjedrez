@@ -17,30 +17,42 @@ public class Partida {
 		jugadorNegras = j2;
 		turno = "blanco";
 		
+	// LAS DOS TORRES
 		
-		Torre torreBlancaI = new Torre(new Posicion('a',1),"blanco");
-		colPiezas.put(torreBlancaI.getPosicion(), torreBlancaI);
+		Torre torreBlanca = new Torre(new Posicion('a',1),"blanco");
+		colPiezas.put(torreBlanca.getPosicion(), torreBlanca);
 		
-		Caballo caballoBlancaI = new Caballo(new Posicion('b',1),"blanco");
-		colPiezas.put(caballoBlancaI.getPosicion(), caballoBlancaI);
+		torreBlanca = new Torre(new Posicion('f',1),"blanco");
+		colPiezas.put(torreBlanca.getPosicion(), torreBlanca);
 		
-		Alfil alfilBlancaI = new Alfil(new Posicion('c',1),"blanco");
-		colPiezas.put(alfilBlancaI.getPosicion(), alfilBlancaI);
+	// LOS DOS CABALLOS	
+		
+		Caballo caballoBlanca = new Caballo(new Posicion('b',1),"blanco");
+		colPiezas.put(caballoBlanca.getPosicion(), caballoBlanca);
+		
+		caballoBlanca = new Caballo(new Posicion('g',1),"blanco");
+		colPiezas.put(caballoBlanca.getPosicion(), caballoBlanca);		
+		
+		// LOS DOS ALFILES
+		
+		Alfil alfilBlanca = new Alfil(new Posicion('c',1),"blanco");
+		colPiezas.put(alfilBlanca.getPosicion(), alfilBlanca);
+		
+		alfilBlanca = new Alfil(new Posicion('h',1),"blanco");
+		colPiezas.put(alfilBlanca.getPosicion(), alfilBlanca);
+		
+		// REINA
 		
 		Reina reinaBlanca = new Reina(new Posicion('d',1),"blanco");
 		colPiezas.put(reinaBlanca.getPosicion(), reinaBlanca);
 		
+		// REY
+		
 		Rey reyBlanca = new Rey(new Posicion('e',1),"blanco");
 		colPiezas.put(reyBlanca.getPosicion(), reyBlanca);
 		
-		Torre torreBlancaD = new Torre(new Posicion('f',1),"blanco");
-		colPiezas.put(torreBlancaD.getPosicion(), torreBlancaD);
 		
-		Caballo caballoBlancaD = new Caballo(new Posicion('g',1),"blanco");
-		colPiezas.put(caballoBlancaD.getPosicion(), caballoBlancaD);
 		
-		Alfil alfilBlancaD = new Alfil(new Posicion('h',1),"blanco");
-		colPiezas.put(alfilBlancaD.getPosicion(), alfilBlancaD);
 		
 		char col='a';
 		for (int i = 0; i < 8; i++) {

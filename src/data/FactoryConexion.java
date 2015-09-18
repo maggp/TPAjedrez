@@ -8,9 +8,9 @@ public class FactoryConexion {
 	private String dbDriver="com.mysql.jdbc.Driver";
 	private String host="localhost";
 	private String port="3306";
-	private String user="javausr";
-	private String pass="java123";
-	private String db="java";
+	private String user="root";
+	private String pass="root";
+	private String db="ajedrez";
 	
 	private Connection conn;
 	private int cantCon;

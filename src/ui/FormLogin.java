@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import entidades.Jugador;
+import entidades.Partida;
 import negocio.CtrlAjedrez;
 
 import javax.swing.GroupLayout;
@@ -118,8 +119,7 @@ public class FormLogin extends JFrame {
 	protected void btnJugar_click() {
 		Jugador j1,j2;
 		String mensaje="";
-		//j1 = controlador.identificarJugador(Integer.parseInt(this.txtJugador1.getText()));
-		j1= new Jugador();
+		j1= controlador.identificarJugador(Integer.parseInt(this.txtJugador1.getText()));
 		if(j1==null){
 			mensaje+="No se encontro jugador con el DNI nro. 1\n";
 		}
@@ -131,7 +131,8 @@ public class FormLogin extends JFrame {
 		}
 		
 		if (mensaje.trim().isEmpty()) {
-			//pedirle al controlador que busque en la base de datos haber si existe un partida o si se debe crear una nueva
+			Partida partida;
+			//partida = controlador.recuperarPartida(j1,j2);
 		}
 		else{
 			JOptionPane.showMessageDialog(null, mensaje, "Error al buscar jugadores", JOptionPane.INFORMATION_MESSAGE);

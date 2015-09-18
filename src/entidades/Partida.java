@@ -15,41 +15,42 @@ public class Partida {
 		
 		jugadorBlancas = j1;
 		jugadorNegras = j2;
-	}
+		turno = "blanco";
 		
-	
-	
-	// piezas blancas. al final de cada variable hay una I izquierdo y  D derecho
-	
-	//CORREGIR
-	
-	Torre torreBlancaI = new Torre(new Posicion("a",1));
-	Caballo caballoBlancaI = new Caballo("b",1);
-	Alfil alfilBlancaI = new Alfil("c",1);
-	Reina reinaBlanca = new Reina("d",1);
-	Rey reyBlanca = new Rey("e",1);
-	Torre torreBlancaD = new Torre("f",1);
-	Caballo caballoBlancaD = new Caballo("g",1);
-	Alfil alfilBlancaD = new Alfil("h",1);
-	Torre torreBlancaD = new Torre(new Posicion("a",1));
-	
-	
-	for (int i = 0; i < 8; i++){
 		
-		Peon PeonBlanca = new Peon(new posicion("a",2));
+		Torre torreBlancaI = new Torre(new Posicion('a',1),"blanco");
+		colPiezas.put(torreBlancaI.getPosicion(), torreBlancaI);
 		
-			
-			
+		Caballo caballoBlancaI = new Caballo(new Posicion('b',1),"blanco");
+		colPiezas.put(caballoBlancaI.getPosicion(), caballoBlancaI);
+		
+		Alfil alfilBlancaI = new Alfil(new Posicion('c',1),"blanco");
+		colPiezas.put(alfilBlancaI.getPosicion(), alfilBlancaI);
+		
+		Reina reinaBlanca = new Reina(new Posicion('d',1),"blanco");
+		colPiezas.put(reinaBlanca.getPosicion(), reinaBlanca);
+		
+		Rey reyBlanca = new Rey(new Posicion('e',1),"blanco");
+		colPiezas.put(reyBlanca.getPosicion(), reyBlanca);
+		
+		Torre torreBlancaD = new Torre(new Posicion('f',1),"blanco");
+		colPiezas.put(torreBlancaD.getPosicion(), torreBlancaD);
+		
+		Caballo caballoBlancaD = new Caballo(new Posicion('g',1),"blanco");
+		colPiezas.put(caballoBlancaD.getPosicion(), caballoBlancaD);
+		
+		Alfil alfilBlancaD = new Alfil(new Posicion('h',1),"blanco");
+		colPiezas.put(alfilBlancaD.getPosicion(), alfilBlancaD);
+		
+		char col='a';
+		for (int i = 0; i < 8; i++) {
+			Peon peonBlanca= new Peon(new Posicion(col, 2),"blanco");
+			colPiezas.put(peonBlanca.getPosicion(), peonBlanca);
+			col++;
+		}		
 		
 		
 		
 	}
  
-	
-	// piezas negras
-	
-	
-
-	
-	
 }

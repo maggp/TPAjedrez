@@ -9,84 +9,70 @@ public class Partida {
 	private Jugador jugadorBlancas;
 	private Jugador jugadorNegras;
 	
-	
-	
+	/**
+	 * Constructores
+	 */
 	public Partida(Jugador j1, Jugador j2){
 		
 		jugadorBlancas = j1;
 		jugadorNegras = j2;
 		turno = "blanco";
-		
-	inicializarPiezas("blanco");
-	inicializarPiezas("negro");
+		colPiezas = new HashMap<Posicion, Pieza>();
+		inicializarPiezas("blanco");
+		inicializarPiezas("negro");
 	}
-
-
 
 	public Partida() {
 		
 	}
 
+	/**
+	 * getters y setters
+	 */
 	public int getIdPartida() {
 		return idPartida;
 	}
-
-
 
 	public void setIdPartida(int idPartida) {
 		this.idPartida = idPartida;
 	}
 
-
-
 	public String getTurno() {
 		return turno;
 	}
-
-
 
 	public void setTurno(String turno) {
 		this.turno = turno;
 	}
 
-
-
 	public HashMap<Posicion, Pieza> getColPiezas() {
 		return colPiezas;
 	}
-
-
 
 	public void setColPiezas(HashMap<Posicion, Pieza> colPiezas) {
 		this.colPiezas = colPiezas;
 	}
 
-
-
 	public Jugador getJugadorBlancas() {
 		return jugadorBlancas;
 	}
-
-
 
 	public void setJugadorBlancas(Jugador jugadorBlancas) {
 		this.jugadorBlancas = jugadorBlancas;
 	}
 
-
-
 	public Jugador getJugadorNegras() {
 		return jugadorNegras;
 	}
-
-
 
 	public void setJugadorNegras(Jugador jugadorNegras) {
 		this.jugadorNegras = jugadorNegras;
 	}
 
 
-
+	/**
+	 * metodos
+	 */
 	private void inicializarPiezas(String color) {
 		// LAS DOS TORRES
 			
@@ -99,42 +85,42 @@ public class Partida {
 				fila2=7;
 			}
 			
-			Torre torreBlanca = new Torre(new Posicion('a',fila1),color);
-			colPiezas.put(torreBlanca.getPosicion(), torreBlanca);
+			Torre torre = new Torre(new Posicion('a',fila1),color);
+			colPiezas.put(torre.getPosicion(), torre);
 			
-			torreBlanca = new Torre(new Posicion('f',fila1),color);
-			colPiezas.put(torreBlanca.getPosicion(), torreBlanca);
+			torre = new Torre(new Posicion('f',fila1),color);
+			colPiezas.put(torre.getPosicion(), torre);
 			
 		// LOS DOS CABALLOS	
 			
-			Caballo caballoBlanca = new Caballo(new Posicion('b',fila1),color);
-			colPiezas.put(caballoBlanca.getPosicion(), caballoBlanca);
+			Caballo caballo = new Caballo(new Posicion('b',fila1),color);
+			colPiezas.put(caballo.getPosicion(), caballo);
 			
-			caballoBlanca = new Caballo(new Posicion('g',fila1),color);
-			colPiezas.put(caballoBlanca.getPosicion(), caballoBlanca);		
+			caballo = new Caballo(new Posicion('g',fila1),color);
+			colPiezas.put(caballo.getPosicion(), caballo);		
 			
 			// LOS DOS ALFILES
 			
-			Alfil alfilBlanca = new Alfil(new Posicion('c',fila1),color);
-			colPiezas.put(alfilBlanca.getPosicion(), alfilBlanca);
+			Alfil alfil = new Alfil(new Posicion('c',fila1),color);
+			colPiezas.put(alfil.getPosicion(), alfil);
 			
-			alfilBlanca = new Alfil(new Posicion('h',fila1),color);
-			colPiezas.put(alfilBlanca.getPosicion(), alfilBlanca);
+			alfil = new Alfil(new Posicion('h',fila1),color);
+			colPiezas.put(alfil.getPosicion(), alfil);
 			
 			// REINA
 			
-			Reina reinaBlanca = new Reina(new Posicion('d',fila1),color);
-			colPiezas.put(reinaBlanca.getPosicion(), reinaBlanca);
+			Reina reina = new Reina(new Posicion('d',fila1),color);
+			colPiezas.put(reina.getPosicion(), reina);
 			
 			// REY
 			
-			Rey reyBlanca = new Rey(new Posicion('e',fila1),color);
-			colPiezas.put(reyBlanca.getPosicion(), reyBlanca);
+			Rey rey = new Rey(new Posicion('e',fila1),color);
+			colPiezas.put(rey.getPosicion(), rey);
 			
 			char col='a';
 			for (int i = 0; i < 8; i++) {
-				Peon peonBlanca= new Peon(new Posicion(col, fila2),color);
-				colPiezas.put(peonBlanca.getPosicion(), peonBlanca);
+				Peon peon= new Peon(new Posicion(col, fila2),color);
+				colPiezas.put(peon.getPosicion(), peon);
 				col++;
 			}
 	} 

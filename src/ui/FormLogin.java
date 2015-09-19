@@ -1,6 +1,5 @@
 package ui;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -117,25 +116,24 @@ public class FormLogin extends JFrame {
 	}
 
 	protected void btnJugar_click() {
-		Jugador j1,j2;
-		String mensaje="";
-		j1= controlador.identificarJugador(Integer.parseInt(this.txtJugador1.getText()));
-		if(j1==null){
-			mensaje+="No se encontro jugador con el DNI nro. 1\n";
-		}
-		else{
-			j2= controlador.identificarJugador(Integer.parseInt(this.txtJugador2.getText()));
-			if(j2==null){
-				mensaje+= "No se enconto jugador con el DNI nro. 2\n";
-			}
-		}
-		
-		if (mensaje.trim().isEmpty()) {
-			Partida partida;
-			//partida = controlador.recuperarPartida(j1,j2);
-		}
-		else{
+		Jugador j1=null , j2=null;
+		try {
+			
+			j1 = controlador.identificarJugador(Integer.parseInt(this.txtJugador1.getText()));
+			j2 = controlador.identificarJugador(Integer.parseInt(this.txtJugador2.getText()));
+			Partida partida = controlador.recuperarPartida(j1,j2);
+			
+		} catch (NullPointerException e) {
+			
+			String mensaje="";
+			if(j1==null) mensaje+= "No se encontro jugador con el DNI nro. 1\n";
+			if(j2==null) mensaje+= "No se enconto jugador con el DNI nro. 2\n";
 			JOptionPane.showMessageDialog(null, mensaje, "Error al buscar jugadores", JOptionPane.INFORMATION_MESSAGE);
+			
+		} catch (NumberFormatException e) {
+			
+			JOptionPane.showMessageDialog(null, "Los campos de DNI no pueden estar vacíos",
+					"Error al buscar jugadores", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 

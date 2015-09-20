@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import appExceptions.ApplicationException;
 import entidades.Jugador;
 import entidades.Partida;
 import negocio.CtrlAjedrez;
@@ -117,12 +118,45 @@ public class FormLogin extends JFrame {
 
 	protected void btnJugar_click() {
 		Jugador j1=null , j2=null;
+		formPartida fp = null;
+		boolean continuar = true;
 		try {
 			
 			j1 = controlador.identificarJugador(Integer.parseInt(this.txtJugador1.getText()));
 			j2 = controlador.identificarJugador(Integer.parseInt(this.txtJugador2.getText()));
 			Partida partida = controlador.recuperarPartida(j1,j2);
-			
+			if (partida==null) {
+				continuar = true;
+				partida = new Partida(j1, j2);
+				controlador.nuevaPartida(partida);
+			} else {
+				int respuesta=JOptionPane.showOptionDialog(null, "Existe una partida guardada.\n"
+						+ "¿Desea continuar la partida?\n"
+						+ "(Si elige no perdera la partida guardada)"
+						, "Partida", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
+						null, new Object[] { "Si", "No", "Cancelar"}, "Si");
+				//Valores para respuesta:
+				//SI = 0
+				//NO = 1
+				//Cancelar = 2
+				if(respuesta==0){
+					continuar = true;
+				}
+				if(respuesta==1){
+					continuar = true;
+					controlador.eliminarPartida(partida.getIdPartida());
+					partida = new Partida(j1, j2);
+					controlador.nuevaPartida(partida);
+				}
+				if(respuesta==2){
+					continuar=false;
+				}
+			}
+			if(continuar){
+				fp = new formPartida(partida);
+				fp.setVisible(true);
+				this.dispose();
+			}
 		} catch (NullPointerException e) {
 			
 			String mensaje="";
@@ -134,6 +168,8 @@ public class FormLogin extends JFrame {
 			
 			JOptionPane.showMessageDialog(null, "Los campos de DNI no pueden estar vacíos",
 					"Error al buscar jugadores", JOptionPane.INFORMATION_MESSAGE);
+		} catch (ApplicationException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import entidades.Partida;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
@@ -190,5 +193,9 @@ public class formPartida extends JFrame {
 		JTextArea txtAreaPosicionesBlanca = new JTextArea();
 		scrollPane.setViewportView(txtAreaPosicionesBlanca);
 		contentPane.setLayout(gl_contentPane);
+	}
+
+	public formPartida(Partida partida) {
+		this();
 	}
 }

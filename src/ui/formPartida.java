@@ -12,7 +12,12 @@ import entidades.Partida;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+import java.sql.SQLException;
+import java.util.HashMap;
+
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JSeparator;
@@ -21,11 +26,19 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 
+import com.mysql.jdbc.PreparedStatement;
+
+import data.FactoryConexion;
+import entidades.Jugador;
+import entidades.Partida;
+import entidades.Pieza;
+import entidades.Posicion;
+
 public class formPartida extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtJugadorBlancas;
-	private JTextField txtJugador2;
+	private JTextField txtJugadorNegras;
 	private JTextField txtTurnoJugador;
 	private JTextField txtDestino;
 
@@ -66,8 +79,8 @@ public class formPartida extends JFrame {
 		JLabel lblNegras = new JLabel("Negras:");
 		lblNegras.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
-		txtJugador2 = new JTextField();
-		txtJugador2.setColumns(10);
+		txtJugadorNegras = new JTextField();
+		txtJugadorNegras.setColumns(10);
 		
 		JSeparator separator = new JSeparator();
 		
@@ -109,7 +122,7 @@ public class formPartida extends JFrame {
 					.addGap(75)
 					.addComponent(lblNegras)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(txtJugador2, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
+					.addComponent(txtJugadorNegras, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(42, Short.MAX_VALUE))
 				.addComponent(separator, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 918, Short.MAX_VALUE)
 				.addGroup(gl_contentPane.createSequentialGroup()
@@ -152,7 +165,7 @@ public class formPartida extends JFrame {
 						.addComponent(lblBlancas)
 						.addComponent(txtJugadorBlancas, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblNegras)
-						.addComponent(txtJugador2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(txtJugadorNegras, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(separator, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
@@ -194,8 +207,65 @@ public class formPartida extends JFrame {
 		scrollPane.setViewportView(txtAreaPosicionesBlanca);
 		contentPane.setLayout(gl_contentPane);
 	}
+<<<<<<< HEAD
 
 	public formPartida(Partida partida) {
 		this();
 	}
+=======
+	
+	public void moverPieza ( Partida par, Posicion origen, Posicion destino){
+		// OBTENGO LAS PIEZAS DE LA PARTIDA 
+		HashMap<Posicion, Pieza> piezas = par.getColPiezas();
+		// OBTENGO LA PIEZA CORRESPONDIENTE A LA POSICION DE ORIGEN		
+		Pieza p = piezas.get(origen);
+		// VERIFICO SI ES VALIDO EL MOVIMIENTO DE DESTINO DE ESA PIEZA
+		if(p.esMovimientoValido(destino)){
+			// SI ES VALIDO ACTUALIZO LA CLAVE(POSICION) 
+			//CORREGIR
+			piezas.put(destino, p);
+			
+			PreparedStatement stmt=null;
+			
+			try {
+				//COMPLETAR CON LOS DATOS DE LA BD
+				stmt = FactoryConexion.getInstancia().getConn().prepareStatement(
+						 "update personas set "
+						);
+				
+				stmt.setString(1, );
+				
+				stmt.execute();
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				throw new ApplicationException("Error al actualizar la posicion de la pieza ", e);
+			} finally{
+				
+				try {
+					if(stmt != null) stmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				FactoryConexion.getInstancia().releaseConn();
+			}
+		}
+		else { 
+			// SI NO ES VALIDO EL MOVIMIENTO MUESTRO MENSAJE CON ERROR
+			JOptionPane.showMessageDialog(null, "MOVIMIENTO INVALIDO");
+		}
+		
+	}
+	protected void mapeoDatosBlancas (Jugador j) {
+	    txtJugadorBlancas.setText(j.getNombre());
+		
+				}
+
+	protected void mapeoDatosNegras (Jugador j) {
+	    txtJugadorNegras.setText(j.getNombre());
+		
+				}
+>>>>>>> 67d4688ff7dc508f841a7d71d12a0e0a8750407c
 }

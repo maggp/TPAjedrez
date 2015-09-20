@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 
+import appExceptions.ApplicationException;
 import entidades.Alfil;
 import entidades.Caballo;
 import entidades.Jugador;
@@ -129,6 +130,68 @@ public class DataPartida {
 			FactoryConexion.getInstancia().releaseConn();
 		}
 		return partida;
+	}
+	
+	public void nuevaPartida(Partida partida) throws ApplicationException{
+		PreparedStatement stmtPartida = null;
+		PreparedStatement stmtPieza = null;
+		ResultSet rs = null;
+		try {
+			//Inserto nueva partida
+			FactoryConexion.getInstancia().getConn().setAutoCommit(false);
+			stmtPartida = FactoryConexion.getInstancia().getConn().prepareStatement(
+					"Insert into partidas(dni_jugador_blancas,dni_jugador_negras) values (?,?)",
+					PreparedStatement.RETURN_GENERATED_KEYS
+					);
+			stmtPartida.setInt(1, partida.getJugadorBlancas().getDni());
+			stmtPartida.setInt(2, partida.getJugadorNegras().getDni());
+			stmtPartida.execute();
+			
+			//Recupero el id asignado por la bd
+			rs = stmtPartida.getGeneratedKeys();
+			if(rs!=null && rs.next()){
+				partida.setIdPartida(rs.getInt(1));
+			}
+			
+			//inserto las piezas en la bd
+			stmtPieza = FactoryConexion.getInstancia().getConn().prepareStatement(
+					"Insert into posiciones(id_partida, ficha, color, fila, columna)"
+					+ "values (?,?,?,?,?);"
+					);
+			for (int fila = 1; fila <= 8; fila++) {
+				for (char col = 'a';  col <= 'h'; col++) {
+					Pieza p = partida.getColPiezas().get(new Posicion(col, fila));
+					if(p!=null){
+						stmtPieza.setInt(1, partida.getIdPartida());
+						stmtPieza.setString(2,p.getTipoPieza() );
+						stmtPieza.setString(3, p.getColor());
+						stmtPieza.setInt(4, fila);
+						stmtPieza.setString(5, String.valueOf(col));
+						stmtPieza.execute();
+					}
+				}
+			}
+			FactoryConexion.getInstancia().getConn().commit();
+			
+		} catch (SQLException e) {
+			try {
+				FactoryConexion.getInstancia().getConn().rollback();
+			} catch (SQLException e1) {
+				throw new ApplicationException("Error al recuperar estado en la base de datos", e);
+			}
+			throw new ApplicationException("Error al registrar nueva partida en la base de datos", e);
+		}
+		finally {
+			try {
+				if(stmtPartida!=null) stmtPartida.close();
+				if(stmtPieza!=null) stmtPieza.close();
+				if(rs!=null) rs.close();
+				FactoryConexion.getInstancia().getConn().setAutoCommit(true);
+			} catch (SQLException e) {
+				throw new ApplicationException("Error al cerrar conexiones con la base de datos", e);
+			}
+		}
+
 	}
 
 }

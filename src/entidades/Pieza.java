@@ -1,13 +1,24 @@
 package entidades;
 
 public class Pieza {
-	
-	private String tipoPieza;
 	private String color;
 	private Posicion posicion;
+	private String tipoPieza;
 	
 	
 	
+	public String getTipoPieza() {
+		return tipoPieza;
+	}
+
+
+
+	protected void setTipoPieza(String tipoPieza) {
+		this.tipoPieza = tipoPieza;
+	}
+
+
+
 	public Pieza(Posicion posicion, String color){
 		
 		this.posicion = posicion;
@@ -43,5 +54,3 @@ public class Pieza {
 	
 	
 }
-
-

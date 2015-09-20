@@ -207,12 +207,11 @@ public class formPartida extends JFrame {
 		scrollPane.setViewportView(txtAreaPosicionesBlanca);
 		contentPane.setLayout(gl_contentPane);
 	}
-<<<<<<< HEAD
 
 	public formPartida(Partida partida) {
 		this();
 	}
-=======
+
 	
 	public void moverPieza ( Partida par, Posicion origen, Posicion destino){
 		// OBTENGO LAS PIEZAS DE LA PARTIDA 
@@ -267,5 +266,4 @@ public class formPartida extends JFrame {
 	    txtJugadorNegras.setText(j.getNombre());
 		
 				}
->>>>>>> 67d4688ff7dc508f841a7d71d12a0e0a8750407c
 }

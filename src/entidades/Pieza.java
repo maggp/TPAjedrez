@@ -1,6 +1,8 @@
 package entidades;
 
 public class Pieza {
+	
+	private String tipoPieza;
 	private String color;
 	private Posicion posicion;
 	

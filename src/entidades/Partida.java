@@ -117,6 +117,7 @@ public class Partida {
 			Rey rey = new Rey(new Posicion('e',fila1),color);
 			colPiezas.put(rey.getPosicion(), rey);
 			
+			//PEONES
 			char col='a';
 			for (int i = 0; i < 8; i++) {
 				Peon peon= new Peon(new Posicion(col, fila2),color);

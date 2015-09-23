@@ -26,6 +26,9 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 
+import negocio.CtrlAjedrez;
+import appExceptions.ApplicationException;
+
 import com.mysql.jdbc.PreparedStatement;
 
 import data.FactoryConexion;
@@ -213,43 +216,20 @@ public class formPartida extends JFrame {
 	}
 
 	
-	public void moverPieza ( Partida par, Posicion origen, Posicion destino){
+	public void moverPieza ( Partida par, Posicion origen, Posicion destino) throws ApplicationException{
 		// OBTENGO LAS PIEZAS DE LA PARTIDA 
 		HashMap<Posicion, Pieza> piezas = par.getColPiezas();
 		// OBTENGO LA PIEZA CORRESPONDIENTE A LA POSICION DE ORIGEN		
 		Pieza p = piezas.get(origen);
 		// VERIFICO SI ES VALIDO EL MOVIMIENTO DE DESTINO DE ESA PIEZA
-		if(p.esMovimientoValido(destino)){
+		if(p.movimientoValido(destino)){
 			// SI ES VALIDO ACTUALIZO LA CLAVE(POSICION) 
 			//CORREGIR
 			piezas.put(destino, p);
 			
-			PreparedStatement stmt=null;
+			CtrlAjedrez ctrlA = new CtrlAjedrez();
+			ctrlA.actualizarMovimiento(par.getIdPartida(),p,destino);
 			
-			try {
-				//COMPLETAR CON LOS DATOS DE LA BD
-				stmt = FactoryConexion.getInstancia().getConn().prepareStatement(
-						 "update personas set "
-						);
-				
-				stmt.setString(1, );
-				
-				stmt.execute();
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				throw new ApplicationException("Error al actualizar la posicion de la pieza ", e);
-			} finally{
-				
-				try {
-					if(stmt != null) stmt.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				FactoryConexion.getInstancia().releaseConn();
-			}
 		}
 		else { 
 			// SI NO ES VALIDO EL MOVIMIENTO MUESTRO MENSAJE CON ERROR

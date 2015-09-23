@@ -194,8 +194,7 @@ public class DataPartida {
 
 	}
    // ELIMINO LAS POSICIONES Y LUEGO ELIMINO LA PARTIDA
-	
-	public void eliminarPartida(int idPartida) throws SQLException { // al agregar "throws SQLException" elimino error en linea 234
+	public void eliminarPartida(int idPartida) {
 		PreparedStatement stmt=null;
 		
 		//  ELIMINO
@@ -203,43 +202,83 @@ public class DataPartida {
 		// POSICIONES
 		
 		try {
-			FactoryConexion.getInstancia().getConn().setAutoCommit(false);
-			stmt = FactoryConexion.getInstancia().getConn().prepareStatement(
+			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
 					  "delete from posiciones where id_partida=?"
 					);
 			stmt.setInt(1, idPartida);
-			stmt.execute();			
-			FactoryConexion.getInstancia().getConn().commit();
-	
-				if(stmt != null) stmt.close();
-				
-		
-			
-			FactoryConexion.getInstancia().releaseConn();
-		
-	
-		
-		// ELIMINO
-		//   LA
-		// PARTIDA
-		
-		
-			FactoryConexion.getInstancia().getConn().setAutoCommit(false);
-			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					  "delete from partidas where id_partida=?"
-					);
-			stmt.setInt(1, idPartida);
 			stmt.execute();
-			FactoryConexion.getInstancia().getConn().commit();
-		} catch (SQLException e) { 
-			FactoryConexion.getInstancia().getConn().rollback();
+			
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally{
 			
 			try {
 				if(stmt != null) stmt.close();
-				FactoryConexion.getInstancia().getConn().setAutoCommit(true);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			FactoryConexion.getInstancia().releaseConn();
+		}
+	
+		
+		// ELIMINO
+		//   LA
+		// PARTIDA
+		
+		try {
+			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+					  "delete from partidas where id_partida=?"
+					);
+			stmt.setInt(1, idPartida);
+			stmt.execute();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			
+			try {
+				if(stmt != null) stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			FactoryConexion.getInstancia().releaseConn();
+		}
+	}
+
+	public void moverPieza(int idPartida, Pieza p, Posicion destino) throws ApplicationException {
+		// TODO Auto-generated method stub
+		PreparedStatement stmt=null;
+		
+		try {
+			//COMPLETAR CON LOS DATOS DE LA BD
+			stmt = FactoryConexion.getInstancia().getConn().prepareStatement(
+					 "update posiciones set fila=? , columna='?' "
+					 + "where id_partida=? and ficha=? and columna=? and fila=? and color=? "
+					);
+			
+			stmt.setInt(1, destino.getFila() );
+			stmt.setInt(2, destino.getColumna() );
+			stmt.setInt(3, idPartida );
+			stmt.setString(4,  String.valueOf(p.getTipoPieza()) );
+			stmt.setString(5, String.valueOf(p.getPosicion().getColumna()) );
+			stmt.setInt(6, p.getPosicion().getFila() );
+			stmt.setString(7, String.valueOf(p.getColor()) );
+			
+			stmt.execute();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw new ApplicationException("Error al actualizar la posicion de la pieza ", e);
+		} finally{
+			
+			try {
+				if(stmt != null) stmt.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

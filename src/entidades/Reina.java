@@ -8,4 +8,12 @@ public class Reina extends Pieza {
 		this.setTipoPieza("D");
 	}
 
+	@Override
+	public boolean movimientoValido(Posicion destino) {
+		// TODO Auto-generated method stub
+		
+		
+		return false;
+	}
+
 }

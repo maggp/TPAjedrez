@@ -8,4 +8,10 @@ public class Rey extends Pieza {
 		
 	}
 
+	@Override
+	public boolean movimientoValido(Posicion destino) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

@@ -8,4 +8,10 @@ public class Torre extends Pieza {
 		this.setTipoPieza("T");
 	}
 
+	@Override
+	public boolean movimientoValido(Posicion destino) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

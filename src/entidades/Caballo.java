@@ -6,5 +6,11 @@ public class Caballo extends Pieza {
 		super(posicion, color);
 		this.setTipoPieza("C");
 	}
+
+	@Override
+	public boolean movimientoValido(Posicion destino) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 }

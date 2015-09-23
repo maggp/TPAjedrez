@@ -88,7 +88,7 @@ public class Partida {
 			Torre torre = new Torre(new Posicion('a',fila1),color);
 			colPiezas.put(torre.getPosicion(), torre);
 			
-			torre = new Torre(new Posicion('f',fila1),color);
+			torre = new Torre(new Posicion('h',fila1),color);
 			colPiezas.put(torre.getPosicion(), torre);
 			
 		// LOS DOS CABALLOS	
@@ -104,9 +104,9 @@ public class Partida {
 			Alfil alfil = new Alfil(new Posicion('c',fila1),color);
 			colPiezas.put(alfil.getPosicion(), alfil);
 			
-			alfil = new Alfil(new Posicion('h',fila1),color);
+			alfil = new Alfil(new Posicion('f',fila1),color);
 			colPiezas.put(alfil.getPosicion(), alfil);
-			
+			 
 			// REINA
 			
 			Reina reina = new Reina(new Posicion('d',fila1),color);

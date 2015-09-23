@@ -9,7 +9,9 @@ import entidades.Partida;
 public class CtrlAjedrez {
 	private DataPartida dp;
 	private DataJugador dj;
-	//private Partida partida;
+	//private Partida partida;	
+	
+	
 	
 	public CtrlAjedrez(){
 		dp = new DataPartida();
@@ -31,7 +33,7 @@ public class CtrlAjedrez {
 	}
 
 	public void eliminarPartida(int idPartida) {
-		// TODO Auto-generated method stub
+		dp.eliminarPartida(idPartida);
 		
 	}
 }

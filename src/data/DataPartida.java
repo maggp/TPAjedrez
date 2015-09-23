@@ -193,5 +193,31 @@ public class DataPartida {
 		}
 
 	}
+   // ELIMINAR PARTIDA
+	public void eliminarPartida(int idPartida) {
+		PreparedStatement stmt=null;
+		
+		try {
+			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+					  "delete from partidas where id_partida=?"
+					);
+			stmt.setInt(1, idPartida);
+			stmt.execute();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			
+			try {
+				if(stmt != null) stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			FactoryConexion.getInstancia().releaseConn();
+		}
+	}
 
 }

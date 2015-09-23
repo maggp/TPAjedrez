@@ -194,7 +194,8 @@ public class DataPartida {
 
 	}
    // ELIMINO LAS POSICIONES Y LUEGO ELIMINO LA PARTIDA
-	public void eliminarPartida(int idPartida) {
+	
+	public void eliminarPartida(int idPartida) throws SQLException { // al agregar "throws SQLException" elimino error en linea 234
 		PreparedStatement stmt=null;
 		
 		//  ELIMINO
@@ -202,46 +203,43 @@ public class DataPartida {
 		// POSICIONES
 		
 		try {
-			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+			FactoryConexion.getInstancia().getConn().setAutoCommit(false);
+			stmt = FactoryConexion.getInstancia().getConn().prepareStatement(
 					  "delete from posiciones where id_partida=?"
 					);
 			stmt.setInt(1, idPartida);
-			stmt.execute();
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally{
-			
-			try {
+			stmt.execute();			
+			FactoryConexion.getInstancia().getConn().commit();
+	
 				if(stmt != null) stmt.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				
+		
 			
 			FactoryConexion.getInstancia().releaseConn();
-		}
+		
 	
 		
 		// ELIMINO
 		//   LA
 		// PARTIDA
 		
-		try {
+		
+			FactoryConexion.getInstancia().getConn().setAutoCommit(false);
 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
 					  "delete from partidas where id_partida=?"
 					);
 			stmt.setInt(1, idPartida);
 			stmt.execute();
-			
-		} catch (SQLException e) {
+			FactoryConexion.getInstancia().getConn().commit();
+		} catch (SQLException e) { 
+			FactoryConexion.getInstancia().getConn().rollback();
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally{
 			
 			try {
 				if(stmt != null) stmt.close();
+				FactoryConexion.getInstancia().getConn().setAutoCommit(true);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

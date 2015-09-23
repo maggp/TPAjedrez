@@ -33,7 +33,7 @@ public class CtrlAjedrez {
 	}
 
 	public void eliminarPartida(int idPartida) {
-		dp.eliminarPartida(idPartida);
+			dp.eliminarPartida(idPartida);
 		
 	}
 }

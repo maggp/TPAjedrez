@@ -45,4 +45,5 @@ public class CtrlAjedrez {
 		dp.moverPieza(idPartida,p,destino);
 		
 	}
+
 }

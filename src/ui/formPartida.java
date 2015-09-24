@@ -1,5 +1,8 @@
 package ui;
 
+import negocio;
+import negocio.CtrlAjedrez;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -227,8 +230,10 @@ public class formPartida extends JFrame {
 			//CORREGIR
 			piezas.put(destino, p);
 			
+
 			CtrlAjedrez ctrlA = new CtrlAjedrez();
 			ctrlA.actualizarMovimiento(par.getIdPartida(),p,destino);
+
 			
 		}
 		else { 

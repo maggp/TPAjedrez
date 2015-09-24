@@ -33,4 +33,23 @@ public abstract class Pieza {
 	
 	public abstract boolean movimientoValido(Posicion destino);
 	
+	protected boolean movimiento(char columnaOrigen, int filaOrigen, char columna,
+			int fila, int itf, int itc) {
+		// TODO Auto-generated method stub
+		boolean valido=false;
+		char[] colum={'a','b','c','d','e','f','g'};
+		for(int F=filaOrigen, C=columnaOrigen;F<=8 && C<=8 && C>0 && F>0;F+=itf , C+=itc){
+			if(F==fila && colum[C-1]==columna)
+				
+			//FIJARSE QUE NO SEA LA MISMA POSICION QUE LA INICIAL
+				if(columna==columnaOrigen && fila==filaOrigen){
+					valido=false;
+				}
+				else{
+						valido=true;
+				}
+			}
+		return valido;
+	}
+	
 }

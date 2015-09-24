@@ -1,7 +1,6 @@
 package ui;
 
-import negocio;
-import negocio.CtrlAjedrez;
+
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -32,9 +31,7 @@ import javax.swing.JButton;
 import negocio.CtrlAjedrez;
 import appExceptions.ApplicationException;
 
-import com.mysql.jdbc.PreparedStatement;
 
-import data.FactoryConexion;
 import entidades.Jugador;
 import entidades.Partida;
 import entidades.Pieza;
@@ -47,6 +44,11 @@ public class formPartida extends JFrame {
 	private JTextField txtJugadorNegras;
 	private JTextField txtTurnoJugador;
 	private JTextField txtDestino;
+	private CtrlAjedrez controlador;
+	private Partida partida;
+	private JTextArea txtAreaPosicionesBlanca;
+	private JTextArea txtAreaPosicionesNegras;
+
 
 	/**
 	 * Launch the application.
@@ -216,6 +218,31 @@ public class formPartida extends JFrame {
 
 	public formPartida(Partida partida) {
 		this();
+		this.partida = partida;
+		controlador= new CtrlAjedrez();
+		this.llenarFormulario();
+
+	}
+	private void llenarFormulario(){
+		this.txtJugadorBlancas.setText(partida.getJugadorBlancas().getNombre()+" "+partida.getJugadorBlancas().getApellido());
+		this.txtJugadorNegras.setText(partida.getJugadorNegras().getNombre()+" "+partida.getJugadorNegras().getApellido());
+		this.txtTurnoJugador.setText(partida.getTurno());
+		for (int fila = 1; fila <= 8; fila++) {
+			for (char col = 'a'; col <='h'; col++) {
+				Pieza p = partida.getColPiezas().get(new Posicion(col, fila));
+				if (p!=null) {
+					if(p.getColor().equals("blanco")){
+						this.txtAreaPosicionesBlanca.setText(txtAreaPosicionesBlanca.getText() + p.getTipoPieza()+
+								": "+p.getPosicion().getFila()+p.getPosicion().getColumna()+"\n");
+					}
+					if(p.getColor().equals("negro")){
+						this.txtAreaPosicionesNegras.setText(txtAreaPosicionesNegras.getText() + p.getTipoPieza()+
+								": "+p.getPosicion().getFila()+p.getPosicion().getColumna()+"\n");
+					}
+				}
+			}
+		}
+		
 	}
 
 	
@@ -242,13 +269,8 @@ public class formPartida extends JFrame {
 		}
 		
 	}
-	protected void mapeoDatosBlancas (Jugador j) {
-	    txtJugadorBlancas.setText(j.getNombre());
-		
-				}
-
-	protected void mapeoDatosNegras (Jugador j) {
-	    txtJugadorNegras.setText(j.getNombre());
-		
-				}
+	
+	
+	
+	
 }

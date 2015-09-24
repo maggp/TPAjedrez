@@ -36,4 +36,5 @@ public class CtrlAjedrez {
 			dp.eliminarPartida(idPartida);
 		
 	}
+	
 }

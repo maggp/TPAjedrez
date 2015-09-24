@@ -91,7 +91,7 @@ public class Partida {
 			torre = new Torre(new Posicion('h',fila1),color);
 			colPiezas.put(torre.getPosicion(), torre);
 			
-		// LOS DOS CABALLOS	
+	    	// LOS DOS CABALLOS	
 			
 			Caballo caballo = new Caballo(new Posicion('b',fila1),color);
 			colPiezas.put(caballo.getPosicion(), caballo);

@@ -35,8 +35,13 @@ public class Caballo extends Pieza {
 	private boolean movimientoCaballo(char columna, int fila,
 			char columnaOrigen, int filaOrigen, int f, int c) {
 		// TODO Auto-generated method stub
+		int COrigen=0;
 		char[] colum={'a','b','c','d','e','f','g'};
-		return (((filaOrigen+f)==fila) && (((columnaOrigen+colum[c-1])==columna) || (columnaOrigen-colum[c-1])==columna));
+		for(int i=0; i<=7;i++){
+			if(colum[i]==columnaOrigen) {COrigen=i;
+									/*salir de for*/		i=8;}
+			
+		}
+		return (((filaOrigen+f)==fila) && (((colum[COrigen+c])==columna) || (columnaOrigen-colum[COrigen-c])==columna));
 	}
-	
 }

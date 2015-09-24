@@ -51,5 +51,36 @@ public abstract class Pieza {
 			}
 		return valido;
 	}
+	protected boolean movimientoDiagonal(char columnaOrigen, int filaOrigen, char columna,
+			int fila, int itf, int itc) {
+		
+		// TODO Auto-generated method stub
+		boolean valido=false;
+		int COrigen=0;
+		char[] colum={'a','b','c','d','e','f','g'};
+		for(int i=0; i<=7;i++){
+			if(colum[i]==columnaOrigen) {COrigen=i;
+									/*salir de for*/		i=8;}
+			
+		}
+		for(int F=filaOrigen, C=COrigen;F<=8 && C<=8 && C>=0 && F>0;F+=itf , C+=itc){
+			if(F==fila && colum[C]==columna)valido=true;
+				
+		}
+			
+			
+		return valido;
+	}
+	public boolean movimientoTorre(char columnaOrigen, int filaOrigen, char columna,
+			int fila, int itf, int itc){ 
+		int COrigen=0;
+		char[] colum={'a','b','c','d','e','f','g'};
+		for(int i=0; i<=7;i++){
+			if(colum[i]==columnaOrigen) {COrigen=i;
+									/*salir de for*/		i=8;}
+			
+		}
+        return (((filaOrigen+itf) == fila)&&((colum[COrigen+itc])==columna)); 
+} 
 	
 }

@@ -13,6 +13,10 @@ public class Caballo extends Pieza {
 
 		char columnaOrigen=this.getPosicion().getColumna();
 		int filaOrigen=this.getPosicion().getFila();
+		if(super.esMismaPosicion(columnaOrigen, filaOrigen, destino.getColumna(), destino.getFila())){
+			 return false;
+		}
+		else{
 		int col= 1; 
         for(int fila=-2; fila < 3; fila++){ 
         	
@@ -23,11 +27,13 @@ public class Caballo extends Pieza {
             } 
         	if(fila<0){ 
                 col++; 
-            }else{ 
+            }
+        	else{ 
                 if(fila>=0){ 
                     col--; 
                 } 
             } 
+        }
 	}
         return false;
 	}

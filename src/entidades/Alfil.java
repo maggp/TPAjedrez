@@ -13,6 +13,12 @@ public class Alfil extends Pieza {
 			// TODO Auto-generated method stub
 				char columnaOrigen=this.getPosicion().getColumna();
 				int filaOrigen=this.getPosicion().getFila();
+				//FIJARSE QUE NO SEA LA MISMA POSICION QUE LA INICIAL
+				if(super.esMismaPosicion(columnaOrigen, filaOrigen, destino.getColumna(), destino.getFila())){
+					 return false;
+				}
+				else{
+					//valido si el movimiento es valido
 				for(int f=-1; f<=1; f+=2){
 					for(int c=-1;c<=1;c+=2){
 						if(super.movimiento(columnaOrigen,filaOrigen,destino.getColumna(),destino.getFila(),f,c))
@@ -22,7 +28,7 @@ public class Alfil extends Pieza {
 				return false;
 			
 			}
-
+		}
 		
 	
 

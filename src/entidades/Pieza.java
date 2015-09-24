@@ -51,6 +51,17 @@ public abstract class Pieza {
 			}
 		return valido;
 	}
+	
+
+	public boolean esMismaPosicion(char columnaOrigen, int filaOrigen, char columna,
+			int fila){
+		if(columna==columnaOrigen && fila==filaOrigen){
+			return true;
+			}
+		else 
+			return false;
+	}
+	
 	protected boolean movimientoDiagonal(char columnaOrigen, int filaOrigen, char columna,
 			int fila, int itf, int itc) {
 		

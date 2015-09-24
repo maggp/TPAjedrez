@@ -21,7 +21,11 @@ public class Peon  extends Pieza{
 		char columnaOrigen=this.getPosicion().getColumna();
 		int filaOrigen=this.getPosicion().getFila();
 		//MOVIMIENTO RECTO HACIA ADELANTE 
-		if(isPrimerMovimiento()){
+		if(super.esMismaPosicion(columnaOrigen, filaOrigen, destino.getColumna(), destino.getFila())){
+			 return false;
+		}
+		else{
+			if(isPrimerMovimiento()){
 			avanza=2;
 			if(getColor()=="blanca"){ 
                 avanza = 2; 
@@ -48,7 +52,7 @@ public class Peon  extends Pieza{
 				if(super.movimiento(columnaOrigen,filaOrigen,destino.getColumna(),destino.getFila(),1,1)){
 					return true;
 			    }
-		
+		  }
 		return false;
 	    }
         //metodo para ver si el peon llego al final del tablero para recuperar otra pieza

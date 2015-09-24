@@ -14,6 +14,11 @@ public class Reina extends Pieza {
 		// TODO Auto-generated method stub
 		char columnaOrigen=this.getPosicion().getColumna();
 		int filaOrigen=this.getPosicion().getFila();
+		if(super.esMismaPosicion(columnaOrigen, filaOrigen, destino.getColumna(), destino.getFila())){
+			 return false;
+		}
+		else{
+		
 		//Consulta movimiento diagonal
 		
 				for(int f=-1; f<=1; f+=2){
@@ -36,4 +41,6 @@ public class Reina extends Pieza {
 		return false;
 	}
 
+	}
+	
 }

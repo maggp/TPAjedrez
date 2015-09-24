@@ -14,6 +14,10 @@ public class Rey extends Pieza {
 		// TODO Auto-generated method stub
 		char columnaOrigen=this.getPosicion().getColumna();
 		int filaOrigen=this.getPosicion().getFila();
+		if(super.esMismaPosicion(columnaOrigen, filaOrigen, destino.getColumna(), destino.getFila())){
+			 return false;
+		}
+		else{
 		for(int f=-1; f<=1; f++){
 			for(int c=-1;c<=1;c++){
 				if(super.movimiento(columnaOrigen,filaOrigen,destino.getColumna(),destino.getFila(),f,c))
@@ -24,4 +28,5 @@ public class Rey extends Pieza {
 		}
 	
 
+	  }
 }

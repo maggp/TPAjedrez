@@ -193,54 +193,42 @@ public class DataPartida {
 		}
 
 	}
-   // ELIMINO LAS POSICIONES Y LUEGO ELIMINO LA PARTIDA
+   
 	public void eliminarPartida(int idPartida) {
-		PreparedStatement stmt=null;
+		PreparedStatement stmt=null,stmtPartida=null;
 		
 		//  ELIMINO
 		//    LAS 
 		// POSICIONES
 		
 		try {
+			FactoryConexion.getInstancia().getConn().setAutoCommit(false);
 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
 					  "delete from posiciones where id_partida=?"
 					);
 			stmt.setInt(1, idPartida);
 			stmt.execute();
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally{
-			
-			try {
-				if(stmt != null) stmt.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			FactoryConexion.getInstancia().releaseConn();
-		}
-	
-		
-		// ELIMINO
-		//   LA
-		// PARTIDA
-		
-		try {
-			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+			stmtPartida=FactoryConexion.getInstancia().getConn().prepareStatement(
 					  "delete from partidas where id_partida=?"
 					);
-			stmt.setInt(1, idPartida);
-			stmt.execute();
+			stmtPartida.setInt(1, idPartida);
+			stmtPartida.execute();
+			FactoryConexion.getInstancia().getConn().commit();
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			try {
+				FactoryConexion.getInstancia().getConn().rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 		} finally{
 			
 			try {
+				FactoryConexion.getInstancia().getConn().setAutoCommit(false);
+				if(stmtPartida != null)stmtPartida.close();
 				if(stmt != null) stmt.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

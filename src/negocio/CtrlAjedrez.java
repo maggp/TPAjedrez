@@ -11,7 +11,7 @@ import entidades.Posicion;
 public class CtrlAjedrez {
 	private DataPartida dp;
 	private DataJugador dj;
-	//private Partida partida;	
+	private Partida partida;	
 	
 	
 	
@@ -20,30 +20,60 @@ public class CtrlAjedrez {
 		dj = new DataJugador();
 	}
 	
+	public CtrlAjedrez(Partida partida) {
+		this();
+		this.partida=partida;
+	}
+
 	public Jugador identificarJugador(int dni) {
 		return dj.getByDni(dni);
 	}
 
 	public Partida recuperarPartida(Jugador j1, Jugador j2) {
-		// TODO Auto-generated method stub
-		return dp.recuperarPartida(j1,j2);
+		partida= dp.recuperarPartida(j1, j2);
+		return partida;
 	}
 
 	public void nuevaPartida(Partida p) throws ApplicationException {
+		partida = p;
 		this.dp.nuevaPartida(p);
 	}
-		
-	
 
 	public void eliminarPartida(int idPartida) {
-			dp.eliminarPartida(idPartida);
-		
+			dp.eliminarPartida(idPartida);		
 	}
 
-	public void actualizarMovimiento(int idPartida, Pieza p, Posicion destino) throws ApplicationException {
-		// TODO Auto-generated method stub
-		dp.moverPieza(idPartida,p,destino);
-		
+	
+	public void moverPieza(Posicion posOrigen, Posicion posDestino) throws ApplicationException {
+		Pieza pieza= partida.getColPiezas().get(posOrigen);
+		try{
+			if (pieza.getColor().equals(partida.getTurno())){
+				if (/*pieza.movimientoValido(posDestino)*/true) {
+					Pieza piezaObjetivo = partida.getColPiezas().get(posDestino);
+					if (piezaObjetivo != null) {
+						partida.getColPiezas().remove(posDestino);
+						//Usamos la posicion z0 para eliminar una pieza sin borrar el registro en la tabla
+						Posicion posEliminado = new Posicion('z', 0);
+						dp.moverPieza(piezaObjetivo, partida, posEliminado );
+					}
+					dp.moverPieza(pieza, partida, posDestino);
+					pieza.setPosicion(posDestino);
+					partida.getColPiezas().remove(posOrigen);
+					partida.getColPiezas().put(posDestino, pieza);
+					if(partida.getTurno().equals("blanco")){
+						partida.setTurno("negro");
+					}else{
+						partida.setTurno("blanco");
+					}
+					dp.actualizarTurno(partida.getIdPartida(),partida.getTurno());
+				} else {
+					throw new ApplicationException("El movimiento introducido no es válido", null);
+				}
+			} else {
+				throw new ApplicationException("La pieza seleccionada para mover no corresponde al jugador del turno", null);
+			}
+		} catch (NullPointerException e){
+			throw new ApplicationException("No se encontro pieza en la posicion ingresada como destino", e);
+		}
 	}
-
 }

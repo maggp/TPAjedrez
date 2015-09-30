@@ -140,11 +140,12 @@ public class DataPartida {
 			//Inserto nueva partida
 			FactoryConexion.getInstancia().getConn().setAutoCommit(false);
 			stmtPartida = FactoryConexion.getInstancia().getConn().prepareStatement(
-					"Insert into partidas(dni_jugador_blancas,dni_jugador_negras) values (?,?)",
+					"Insert into partidas(dni_jugador_blancas,dni_jugador_negras,turno) values (?,?,?)",
 					PreparedStatement.RETURN_GENERATED_KEYS
 					);
 			stmtPartida.setInt(1, partida.getJugadorBlancas().getDni());
 			stmtPartida.setInt(2, partida.getJugadorNegras().getDni());
+			stmtPartida.setString(3, partida.getTurno());
 			stmtPartida.execute();
 			
 			//Recupero el id asignado por la bd
@@ -239,29 +240,27 @@ public class DataPartida {
 		}
 	}
 
-	public void moverPieza(int idPartida, Pieza p, Posicion destino) throws ApplicationException {
-		// TODO Auto-generated method stub
+	public void moverPieza(Pieza pieza, Partida partida, Posicion destino) throws ApplicationException {
 		PreparedStatement stmt=null;
 		
 		try {
 			//COMPLETAR CON LOS DATOS DE LA BD
 			stmt = FactoryConexion.getInstancia().getConn().prepareStatement(
-					 "update posiciones set fila=? , columna='?' "
+					 "update posiciones set fila=? , columna=? "
 					 + "where id_partida=? and ficha=? and columna=? and fila=? and color=? "
 					);
 			
 			stmt.setInt(1, destino.getFila() );
-			stmt.setInt(2, destino.getColumna() );
-			stmt.setInt(3, idPartida );
-			stmt.setString(4,  String.valueOf(p.getTipoPieza()) );
-			stmt.setString(5, String.valueOf(p.getPosicion().getColumna()) );
-			stmt.setInt(6, p.getPosicion().getFila() );
-			stmt.setString(7, String.valueOf(p.getColor()) );
+			stmt.setString(2, String.valueOf(destino.getColumna()));
+			stmt.setInt(3, partida.getIdPartida() );
+			stmt.setString(4,  pieza.getTipoPieza() );
+			stmt.setString(5, String.valueOf(pieza.getPosicion().getColumna()) );
+			stmt.setInt(6, pieza.getPosicion().getFila() );
+			stmt.setString(7, String.valueOf(pieza.getColor()) );
 			
 			stmt.execute();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			throw new ApplicationException("Error al actualizar la posicion de la pieza ", e);
 		} finally{
 			
@@ -276,6 +275,26 @@ public class DataPartida {
 		}
 	}
 
-	
+	public void actualizarTurno(int id_partida, String turno) throws ApplicationException {
+		PreparedStatement stmt = null;
+		try {
+			stmt = FactoryConexion.getInstancia().getConn().prepareStatement("update partidas set turno=? where id_partida=?");
+			stmt.setString(1, turno);
+			stmt.setInt(2, id_partida);
+			stmt.execute();
+		} catch (SQLException e) {
+			throw new ApplicationException("Error al actualizar el turno en la base de datos", e);
+		}
+		finally {
+			try {
+				if(stmt != null) stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			FactoryConexion.getInstancia().releaseConn();
+		}
+	}
 	
 }

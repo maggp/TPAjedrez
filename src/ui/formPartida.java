@@ -2,7 +2,7 @@ package ui;
 
 
 
-import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -16,14 +16,11 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 
 import java.awt.Font;
-import java.sql.SQLException;
-import java.util.HashMap;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JSeparator;
-import javax.swing.JScrollBar;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
@@ -31,11 +28,10 @@ import javax.swing.JButton;
 import negocio.CtrlAjedrez;
 import appExceptions.ApplicationException;
 
-
-import entidades.Jugador;
-import entidades.Partida;
 import entidades.Pieza;
 import entidades.Posicion;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class formPartida extends JFrame {
 
@@ -43,11 +39,14 @@ public class formPartida extends JFrame {
 	private JTextField txtJugadorBlancas;
 	private JTextField txtJugadorNegras;
 	private JTextField txtTurnoJugador;
-	private JTextField txtDestino;
+	private JTextField txtDestinoCol;
 	private CtrlAjedrez controlador;
 	private Partida partida;
-	private JTextArea txtAreaPosicionesBlanca;
+	private JTextArea txtAreaPosicionesBlancas;
 	private JTextArea txtAreaPosicionesNegras;
+	private JTextField txtDestinoFila;
+	private JTextField txtOrigenCol;
+	private JTextField txtOrigenFila;
 
 
 	/**
@@ -82,12 +81,14 @@ public class formPartida extends JFrame {
 		lblBlancas.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		txtJugadorBlancas = new JTextField();
+		txtJugadorBlancas.setEditable(false);
 		txtJugadorBlancas.setColumns(10);
 		
 		JLabel lblNegras = new JLabel("Negras:");
 		lblNegras.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		txtJugadorNegras = new JTextField();
+		txtJugadorNegras.setEditable(false);
 		txtJugadorNegras.setColumns(10);
 		
 		JSeparator separator = new JSeparator();
@@ -96,6 +97,7 @@ public class formPartida extends JFrame {
 		lblTurnoJugador.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		txtTurnoJugador = new JTextField();
+		txtTurnoJugador.setEditable(false);
 		txtTurnoJugador.setColumns(10);
 		
 		JLabel lblPosicionesBlancas = new JLabel("Posiciones Blancas:");
@@ -112,13 +114,29 @@ public class formPartida extends JFrame {
 		
 		JLabel lblDestino = new JLabel("Destino:");
 		
-		JTextField txtOrigen = new JTextField();
-		txtOrigen.setColumns(10);
+		txtOrigenCol = new JTextField();
+		txtOrigenCol.setColumns(10);
 		
-		txtDestino = new JTextField();
-		txtDestino.setColumns(10);
+		txtDestinoCol = new JTextField();
+		txtDestinoCol.setColumns(10);
 		
 		JButton btnMover = new JButton("Mover");
+		btnMover.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				btnMover_click();
+			}
+		});
+		
+		txtOrigenFila = new JTextField();
+		txtOrigenFila.setColumns(10);
+		
+		txtDestinoFila = new JTextField();
+		txtDestinoFila.setColumns(10);
+		
+		JLabel lblColumna = new JLabel("Columna:");
+		
+		JLabel lblFila = new JLabel("Fila:");
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -131,39 +149,39 @@ public class formPartida extends JFrame {
 					.addComponent(lblNegras)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(txtJugadorNegras, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(42, Short.MAX_VALUE))
-				.addComponent(separator, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 918, Short.MAX_VALUE)
+					.addContainerGap(52, Short.MAX_VALUE))
+				.addComponent(separator, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 795, Short.MAX_VALUE)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(33)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(lblTurnoJugador)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(txtTurnoJugador, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-							.addComponent(lblPosicionesNegras)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(scrollPane_1, Alignment.LEADING)
-								.addComponent(lblPosicionesBlancas, Alignment.LEADING)
-								.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))))
-					.addPreferredGap(ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblPosicionesNegras)
+						.addComponent(lblPosicionesBlancas)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+						.addComponent(scrollPane_1))
+					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblMovimiento))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addComponent(lblOrigen)
-								.addComponent(lblDestino))
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblMovimiento)
+								.addComponent(lblDestino)
+								.addComponent(lblOrigen))
 							.addGap(18)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(txtDestino, Alignment.TRAILING, 0, 0, Short.MAX_VALUE)
-								.addComponent(txtOrigen, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)))
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnMover)))
-					.addGap(403))
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblColumna)
+								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+									.addComponent(txtDestinoCol, Alignment.TRAILING, 0, 0, Short.MAX_VALUE)
+									.addComponent(txtOrigenCol, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE))))
+						.addComponent(btnMover))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(txtOrigenFila, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtDestinoFila, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblFila))
+					.addGap(311))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -186,12 +204,20 @@ public class formPartida extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblMovimiento)
-							.addGap(18)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(txtOrigen, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblOrigen))
-							.addPreferredGap(ComponentPlacement.RELATED)))
+								.addComponent(lblMovimiento)
+								.addComponent(lblColumna)
+								.addComponent(lblFila))
+							.addGap(18)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+										.addComponent(txtOrigenCol, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(txtOrigenFila, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+									.addPreferredGap(ComponentPlacement.RELATED))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(lblOrigen)
+									.addGap(5)))))
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(18)
@@ -201,43 +227,63 @@ public class formPartida extends JFrame {
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(6)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(txtDestino, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblDestino))
+								.addComponent(txtDestinoCol, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblDestino)
+								.addComponent(txtDestinoFila, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(btnMover)))
-					.addContainerGap(31, Short.MAX_VALUE))
+					.addContainerGap(40, Short.MAX_VALUE))
 		);
 		
-		JTextArea txtAreaPosicionesNegras = new JTextArea();
+		txtAreaPosicionesNegras = new JTextArea();
 		scrollPane_1.setViewportView(txtAreaPosicionesNegras);
 		
-		JTextArea txtAreaPosicionesBlanca = new JTextArea();
-		scrollPane.setViewportView(txtAreaPosicionesBlanca);
+		txtAreaPosicionesBlancas = new JTextArea();
+		scrollPane.setViewportView(txtAreaPosicionesBlancas);
 		contentPane.setLayout(gl_contentPane);
+	}
+
+	protected void btnMover_click() {
+		try {
+			char colOrigen = this.txtOrigenCol.getText().trim().toCharArray()[0];
+			int filaOrigen = Integer.parseInt(this.txtOrigenFila.getText());
+			Posicion posOrigen = new Posicion(colOrigen, filaOrigen);
+			char colDestino = this.txtDestinoCol.getText().trim().toCharArray()[0];
+			int filaDestino = Integer.parseInt(this.txtDestinoFila.getText());
+			Posicion posDestino = new Posicion(colDestino, filaDestino);
+			controlador.moverPieza(posOrigen, posDestino);
+			this.llenarFormulario();
+		} catch (ApplicationException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(null, "Los campos de fila deben ser un numero entero", "Error", JOptionPane.INFORMATION_MESSAGE);
+		}
+		
 	}
 
 	public formPartida(Partida partida) {
 		this();
 		this.partida = partida;
-		controlador= new CtrlAjedrez();
+		controlador= new CtrlAjedrez(partida);
 		this.llenarFormulario();
-
 	}
 	private void llenarFormulario(){
 		this.txtJugadorBlancas.setText(partida.getJugadorBlancas().getNombre()+" "+partida.getJugadorBlancas().getApellido());
 		this.txtJugadorNegras.setText(partida.getJugadorNegras().getNombre()+" "+partida.getJugadorNegras().getApellido());
 		this.txtTurnoJugador.setText(partida.getTurno());
+		this.txtAreaPosicionesBlancas.setText("");
+		this.txtAreaPosicionesNegras.setText("");
 		for (int fila = 1; fila <= 8; fila++) {
 			for (char col = 'a'; col <='h'; col++) {
 				Pieza p = partida.getColPiezas().get(new Posicion(col, fila));
 				if (p!=null) {
 					if(p.getColor().equals("blanco")){
-						this.txtAreaPosicionesBlanca.setText(txtAreaPosicionesBlanca.getText() + p.getTipoPieza()+
-								": "+p.getPosicion().getFila()+p.getPosicion().getColumna()+"\n");
+						this.txtAreaPosicionesBlancas.setText(txtAreaPosicionesBlancas.getText() + p.getTipoPieza()+
+								": "+p.getPosicion().getColumna()+p.getPosicion().getFila()+"\n");
 					}
 					if(p.getColor().equals("negro")){
 						this.txtAreaPosicionesNegras.setText(txtAreaPosicionesNegras.getText() + p.getTipoPieza()+
-								": "+p.getPosicion().getFila()+p.getPosicion().getColumna()+"\n");
+								": "+p.getPosicion().getColumna()+p.getPosicion().getFila()+"\n");
 					}
 				}
 			}
@@ -245,32 +291,6 @@ public class formPartida extends JFrame {
 		
 	}
 
-	
-	public void moverPieza ( Partida par, Posicion origen, Posicion destino) throws ApplicationException{
-		// OBTENGO LAS PIEZAS DE LA PARTIDA 
-		HashMap<Posicion, Pieza> piezas = par.getColPiezas();
-		// OBTENGO LA PIEZA CORRESPONDIENTE A LA POSICION DE ORIGEN		
-		Pieza p = piezas.get(origen);
-		// VERIFICO SI ES VALIDO EL MOVIMIENTO DE DESTINO DE ESA PIEZA
-		if(p.movimientoValido(destino)){
-			// SI ES VALIDO ACTUALIZO LA CLAVE(POSICION) 
-			//CORREGIR
-			piezas.put(destino, p);
-			
-
-			CtrlAjedrez ctrlA = new CtrlAjedrez();
-			ctrlA.actualizarMovimiento(par.getIdPartida(),p,destino);
-
-			
-		}
-		else { 
-			// SI NO ES VALIDO EL MOVIMIENTO MUESTRO MENSAJE CON ERROR
-			JOptionPane.showMessageDialog(null, "MOVIMIENTO INVALIDO");
-		}
-		
-	}
-	
-	
 	
 	
 }

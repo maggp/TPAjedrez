@@ -64,9 +64,11 @@ public class FormLogin extends JFrame {
 		lblJugador2.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		txtJugador1 = new JTextField();
+		txtJugador1.setText("11111111");
 		txtJugador1.setColumns(10);
 		
 		txtJugador2 = new JTextField();
+		txtJugador2.setText("22222222");
 		txtJugador2.setColumns(10);
 		
 		JButton btnJugar = new JButton("Jugar");
@@ -165,7 +167,6 @@ public class FormLogin extends JFrame {
 			JOptionPane.showMessageDialog(null, mensaje, "Error al buscar jugadores", JOptionPane.INFORMATION_MESSAGE);
 			
 		} catch (NumberFormatException e) {
-			
 			JOptionPane.showMessageDialog(null, "Los campos de DNI no pueden estar vacíos",
 					"Error al buscar jugadores", JOptionPane.INFORMATION_MESSAGE);
 		} catch (ApplicationException e) {

@@ -27,7 +27,7 @@ import javax.swing.JButton;
 
 import negocio.CtrlAjedrez;
 import appExceptions.ApplicationException;
-
+import appExceptions.EndGameException;
 import entidades.Pieza;
 import entidades.Posicion;
 import java.awt.event.MouseAdapter;
@@ -47,6 +47,12 @@ public class formPartida extends JFrame {
 	private JTextField txtDestinoFila;
 	private JTextField txtOrigenCol;
 	private JTextField txtOrigenFila;
+	private JButton btnMover;
+	private JLabel lblMovimiento;
+	private JLabel lblColumna;
+	private JLabel lblFila;
+	private JLabel lblOrigen;
+	private JLabel lblDestino;
 
 
 	/**
@@ -108,11 +114,11 @@ public class formPartida extends JFrame {
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		
-		JLabel lblMovimiento = new JLabel("Movimiento:");
+		lblMovimiento = new JLabel("Movimiento:");
 		
-		JLabel lblOrigen = new JLabel("Origen:");
+		lblOrigen = new JLabel("Origen:");
 		
-		JLabel lblDestino = new JLabel("Destino:");
+		lblDestino = new JLabel("Destino:");
 		
 		txtOrigenCol = new JTextField();
 		txtOrigenCol.setColumns(10);
@@ -120,7 +126,7 @@ public class formPartida extends JFrame {
 		txtDestinoCol = new JTextField();
 		txtDestinoCol.setColumns(10);
 		
-		JButton btnMover = new JButton("Mover");
+		btnMover = new JButton("Mover");
 		btnMover.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -134,9 +140,9 @@ public class formPartida extends JFrame {
 		txtDestinoFila = new JTextField();
 		txtDestinoFila.setColumns(10);
 		
-		JLabel lblColumna = new JLabel("Columna:");
+		lblColumna = new JLabel("Columna:");
 		
-		JLabel lblFila = new JLabel("Fila:");
+		lblFila = new JLabel("Fila:");
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -262,6 +268,20 @@ public class formPartida extends JFrame {
 		
 	}
 
+	private void ocultarControles() {
+		this.txtDestinoCol.setVisible(false);
+		this.txtDestinoFila.setVisible(false);
+		this.txtOrigenCol.setVisible(false);
+		this.txtOrigenFila.setVisible(false);
+		this.btnMover.setVisible(false);
+		this.lblColumna.setVisible(false);
+		this.lblDestino.setVisible(false);
+		this.lblFila.setVisible(false);
+		this.lblMovimiento.setVisible(false);
+		this.lblOrigen.setVisible(false);
+	}
+	
+	
 	public formPartida(Partida partida) {
 		this();
 		this.partida = partida;

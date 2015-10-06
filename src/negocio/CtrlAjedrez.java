@@ -1,6 +1,7 @@
 package negocio;
 
 import appExceptions.ApplicationException;
+import appExceptions.EndGameException;
 import data.DataJugador;
 import data.DataPartida;
 import entidades.Jugador;
@@ -43,12 +44,11 @@ public class CtrlAjedrez {
 			dp.eliminarPartida(idPartida);		
 	}
 
-	
 	public void moverPieza(Posicion posOrigen, Posicion posDestino) throws ApplicationException {
 		Pieza pieza= partida.getColPiezas().get(posOrigen);
 		try{
 			if (pieza.getColor().equals(partida.getTurno())){
-				if (pieza.movimientoValido(posDestino)/*true*/) {
+				if (/*pieza.movimientoValido(posDestino)*/true) {
 					Pieza piezaObjetivo = partida.getColPiezas().get(posDestino);
 					if (piezaObjetivo != null) {
 						partida.getColPiezas().remove(posDestino);
@@ -60,12 +60,19 @@ public class CtrlAjedrez {
 					pieza.setPosicion(posDestino);
 					partida.getColPiezas().remove(posOrigen);
 					partida.getColPiezas().put(posDestino, pieza);
+					Jugador jugadorActual = null;
 					if(partida.getTurno().equals("blanco")){
 						partida.setTurno("negro");
+						jugadorActual = partida.getJugadorBlancas();
 					}else{
 						partida.setTurno("blanco");
+						jugadorActual = partida.getJugadorNegras();
 					}
 					dp.actualizarTurno(partida.getIdPartida(),partida.getTurno());
+					if(piezaObjetivo.getTipoPieza().equals("R")) {
+						
+						throw new EndGameException("Felicidades "+ jugadorActual.getNombre()+" "+jugadorActual.getApellido()+" ha ganado la partida!!!", null);
+					}
 				} else {
 					throw new ApplicationException("El movimiento introducido no es válido", null);
 				}

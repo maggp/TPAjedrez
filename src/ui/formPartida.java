@@ -251,18 +251,27 @@ public class formPartida extends JFrame {
 
 	protected void btnMover_click() {
 		try {
-			char colOrigen = this.txtOrigenCol.getText().trim().toCharArray()[0];
+			char colOrigen = this.txtOrigenCol.getText().toLowerCase().trim().toCharArray()[0];
 			int filaOrigen = Integer.parseInt(this.txtOrigenFila.getText());
 			Posicion posOrigen = new Posicion(colOrigen, filaOrigen);
-			char colDestino = this.txtDestinoCol.getText().trim().toCharArray()[0];
+			char colDestino = this.txtDestinoCol.getText().toLowerCase().trim().toCharArray()[0];
 			int filaDestino = Integer.parseInt(this.txtDestinoFila.getText());
 			Posicion posDestino = new Posicion(colDestino, filaDestino);
 			controlador.moverPieza(posOrigen, posDestino);
 			this.llenarFormulario();
 			this.borrarContenido();
-		} catch (ApplicationException e) {
+			
+		} catch(EndGameException e){
+			this.llenarFormulario();
+			ocultarControles();
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Juego Finalizado", JOptionPane.INFORMATION_MESSAGE);
+		} 
+		
+		catch (ApplicationException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
-		} catch (NumberFormatException e) {
+		} 
+		
+		catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(null, "Los campos de fila deben ser un numero entero", "Error", JOptionPane.INFORMATION_MESSAGE);
 		}
 		

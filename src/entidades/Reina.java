@@ -23,7 +23,7 @@ public class Reina extends Pieza {
 		
 				for(int f=-1; f<=1; f+=2){
 					for(int c=-1;c<=1;c+=2){
-						if(super.movimientoDiagonal(columnaOrigen,filaOrigen,destino.getColumna(),destino.getFila(),f,c))
+						if(super.movimiento(columnaOrigen,filaOrigen,destino.getColumna(),destino.getFila(),f,c))
 							return true;
 					}
 				}
@@ -31,7 +31,7 @@ public class Reina extends Pieza {
 				for(int i=-1;i<=1;i++){
 					for(int j=-1;j<=1;j++){
 						if((j-i)==1 || (j-i)==-1){
-							if(movimientoDiagonal(columnaOrigen, filaOrigen, destino.getColumna(), destino.getFila(), i, j)){ 
+							if(movimiento(columnaOrigen, filaOrigen, destino.getColumna(), destino.getFila(), i, j)){ 
 					             return true; 
 					         }
 							

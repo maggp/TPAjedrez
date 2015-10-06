@@ -48,7 +48,7 @@ public class CtrlAjedrez {
 		Pieza pieza= partida.getColPiezas().get(posOrigen);
 		try{
 			if (pieza.getColor().equals(partida.getTurno())){
-				if (/*pieza.movimientoValido(posDestino)*/true) {
+				if (pieza.movimientoValido(posDestino)/*true*/) {
 					Pieza piezaObjetivo = partida.getColPiezas().get(posDestino);
 					if (piezaObjetivo != null) {
 						partida.getColPiezas().remove(posDestino);

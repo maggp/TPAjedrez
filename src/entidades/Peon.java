@@ -17,7 +17,8 @@ public class Peon  extends Pieza{
 	
 	public boolean movimientoValido(Posicion destino) {
 		// TODO Auto-generated method stub
-		int avanza;
+		int avanza=0;
+		boolean valido=false;
 		char columnaOrigen=this.getPosicion().getColumna();
 		int filaOrigen=this.getPosicion().getFila();
 		//MOVIMIENTO RECTO HACIA ADELANTE 
@@ -25,36 +26,43 @@ public class Peon  extends Pieza{
 			 return false;
 		}
 		else{
-			if(isPrimerMovimiento()){
-			avanza=2;
-			if(getColor()=="blanca"){ 
-                avanza = 2; 
-            } else{ 
-                avanza = -2; 
-            }
-			this.setPrimerMovimiento(true);
 			
-		}else{
-			if(getColor()=="blanca"){ 
+			if(getColor().equals("blanco")){ 
                 avanza = 1; 
             } else{ 
                 avanza = -1; 
             }
-		
-		}
-		if(filaOrigen+avanza==destino.getFila() && columnaOrigen==destino.getColumna()){
-			return true;
-		}
-		//MOVIMIENTO DIAGONAL
+			if(filaOrigen+avanza==destino.getFila() && columnaOrigen==destino.getColumna()){
+				valido=true;
+				this.setPrimerMovimiento(true);
+			}
+			
+			if(!valido){				
+								if(getColor().equals("blanco")){ 
+					                avanza = 2; 
+					            } else{ 
+					                avanza = -2; 
+					            }
+								this.setPrimerMovimiento(true);
+								if(!primerMovimiento){
+									if(filaOrigen+avanza==destino.getFila() && columnaOrigen==destino.getColumna()){
+										valido=true;
+									}		
+								}
+								
+						}
+				//MOVIMIENTO DIAGONAL
 				if(super.movimiento(columnaOrigen,filaOrigen,destino.getColumna(),destino.getFila(),-1,1)){
-					return true;
+					valido=true;
 			    }
 				if(super.movimiento(columnaOrigen,filaOrigen,destino.getColumna(),destino.getFila(),1,1)){
-					return true;
+					valido=true;
 			    }
 		  }
-		return false;
+		return valido;
 	    }
+	
+	
         //metodo para ver si el peon llego al final del tablero para recuperar otra pieza
 		public boolean finalTablero(){
 			int fila=this.getPosicion().getFila();

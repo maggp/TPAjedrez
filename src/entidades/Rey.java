@@ -20,7 +20,7 @@ public class Rey extends Pieza {
 		else{
 		for(int f=-1; f<=1; f++){
 			for(int c=-1;c<=1;c++){
-				if(super.movimiento(columnaOrigen,filaOrigen,destino.getColumna(),destino.getFila(),f,c))
+				if(super.movimientoRey(columnaOrigen,filaOrigen,destino.getColumna(),destino.getFila(),f,c))
 					return true;
 			}
 		}

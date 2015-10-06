@@ -32,26 +32,6 @@ public abstract class Pieza {
 	
 	
 	public abstract boolean movimientoValido(Posicion destino);
-	
-	protected boolean movimiento(char columnaOrigen, int filaOrigen, char columna,
-			int fila, int itf, int itc) {
-		// TODO Auto-generated method stub
-		boolean valido=false;
-		char[] colum={'a','b','c','d','e','f','g'};
-		for(int F=filaOrigen, C=columnaOrigen;F<=8 && C<=8 && C>0 && F>0;F+=itf , C+=itc){
-			if(F==fila && colum[C-1]==columna)
-				
-			//FIJARSE QUE NO SEA LA MISMA POSICION QUE LA INICIAL
-				if(columna==columnaOrigen && fila==filaOrigen){
-					valido=false;
-				}
-				else{
-						valido=true;
-				}
-			}
-		return valido;
-	}
-	
 
 	public boolean esMismaPosicion(char columnaOrigen, int filaOrigen, char columna,
 			int fila){
@@ -62,36 +42,21 @@ public abstract class Pieza {
 			return false;
 	}
 	
-	protected boolean movimientoDiagonal(char columnaOrigen, int filaOrigen, char columna,
-			int fila, int itf, int itc) {
-		
-		// TODO Auto-generated method stub
+	protected boolean movimiento(char columnaOrigen, int filaOrigen, char columna,
+			int fila, int itf, int itc) {	
 		boolean valido=false;
-		int COrigen=0;
-		char[] colum={'a','b','c','d','e','f','g'};
-		for(int i=0; i<=7;i++){
-			if(colum[i]==columnaOrigen) {COrigen=i;
-									/*salir de for*/		i=8;}
-			
-		}
-		for(int F=filaOrigen, C=COrigen;F<=8 && C<=8 && C>=0 && F>0;F+=itf , C+=itc){
-			if(F==fila && colum[C]==columna)valido=true;
+		int F=filaOrigen;
+		char C=columnaOrigen;
+		for(;F<=8 && C<='h' && C>='a' && F>0;F+=itf , C+=itc){
+			if(F==fila && C==columna){valido=true;
+									break;}
 				
 		}
-			
-			
 		return valido;
 	}
-	public boolean movimientoTorre(char columnaOrigen, int filaOrigen, char columna,
+	public boolean movimientoRey(char columnaOrigen, int filaOrigen, char columna,
 			int fila, int itf, int itc){ 
-		int COrigen=0;
-		char[] colum={'a','b','c','d','e','f','g'};
-		for(int i=0; i<=7;i++){
-			if(colum[i]==columnaOrigen) {COrigen=i;
-									/*salir de for*/		i=8;}
-			
-		}
-        return (((filaOrigen+itf) == fila)&&((colum[COrigen+itc])==columna)); 
+        return (((filaOrigen+itf) == fila)&&((columnaOrigen+itc)==columna)); 
 } 
 	
 }

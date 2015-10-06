@@ -253,6 +253,7 @@ public class formPartida extends JFrame {
 			Posicion posDestino = new Posicion(colDestino, filaDestino);
 			controlador.moverPieza(posOrigen, posDestino);
 			this.llenarFormulario();
+			this.borrarContenido();
 		} catch (ApplicationException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
 		} catch (NumberFormatException e) {
@@ -289,6 +290,12 @@ public class formPartida extends JFrame {
 			}
 		}
 		
+	}
+	private void borrarContenido(){
+		this.txtDestinoCol.setText("");
+		this.txtDestinoFila.setText("");
+		this.txtOrigenCol.setText("");
+		this.txtOrigenFila.setText("");
 	}
 
 	

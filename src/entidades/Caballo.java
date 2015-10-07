@@ -39,12 +39,12 @@ public class Caballo extends Pieza {
 	private boolean movimientoCaballo(char columna, int fila,
 			char columnaOrigen, int filaOrigen, int f, int c) {
 		int COrigen=0;
-		char[] colum={'a','b','c','d','e','f','g'};
+		char[] colum={'a','b','c','d','e','f','g','h'};
 		for(int i=0; i<=7;i++){
 			if(colum[i]==columnaOrigen) {COrigen=i;
 									/*salir de for*/		i=8;}
 			
 		}
-		return (((filaOrigen+f)==fila) && (((colum[COrigen+c])==columna) || (columnaOrigen-colum[COrigen-c])==columna));
+		return (((filaOrigen+f)==fila) && (((colum[COrigen+c])==columna) || (colum[COrigen-c])==columna));
 	}
 }

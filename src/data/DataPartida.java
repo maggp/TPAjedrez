@@ -19,7 +19,7 @@ import entidades.Torre;
 
 public class DataPartida {
 
-	public Partida recuperarPartida(Jugador j1, Jugador j2) {
+	public Partida recuperarPartida(Jugador j1, Jugador j2) throws ApplicationException {
 		Partida partida = null;
 		ResultSet rs = null;
 		ResultSet rsFin = null;
@@ -111,8 +111,7 @@ public class DataPartida {
 				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ApplicationException("Error al recuperar partida de la base de datos", e);
 		}
 		finally
 		{
@@ -124,8 +123,7 @@ public class DataPartida {
 				if(rsPosiciones != null) rsPosiciones.close();
 				if(rsFin != null) rsFin.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new ApplicationException("Error al liberar recursos de la base de datos", e);
 			}
 			FactoryConexion.getInstancia().releaseConn();
 		}
@@ -195,7 +193,7 @@ public class DataPartida {
 
 	}
    
-	public void eliminarPartida(int idPartida) {
+	public void eliminarPartida(int idPartida) throws ApplicationException {
 		PreparedStatement stmt=null,stmtPartida=null;
 		
 		//  ELIMINO
@@ -217,14 +215,13 @@ public class DataPartida {
 			FactoryConexion.getInstancia().getConn().commit();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			try {
 				FactoryConexion.getInstancia().getConn().rollback();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				throw new ApplicationException("1)Error al eliminar partida de la base de datos"
+						+ "\n2)Error al deshacer los cambios en la base de datos", e);
 			}
-			e.printStackTrace();
+			throw new ApplicationException("Error al eliminar partida de la base de datos", e);
 		} finally{
 			
 			try {
@@ -232,8 +229,7 @@ public class DataPartida {
 				if(stmtPartida != null)stmtPartida.close();
 				if(stmt != null) stmt.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new ApplicationException("Error al liberar recursos de la base de datos", e);
 			}
 			
 			FactoryConexion.getInstancia().releaseConn();
@@ -267,8 +263,7 @@ public class DataPartida {
 			try {
 				if(stmt != null) stmt.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new ApplicationException("Error al liberar recursos de la base de datos", e);
 			}
 			
 			FactoryConexion.getInstancia().releaseConn();
@@ -289,8 +284,7 @@ public class DataPartida {
 			try {
 				if(stmt != null) stmt.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new ApplicationException("Error al liberar recursos de la base de datos", e);
 			}
 			
 			FactoryConexion.getInstancia().releaseConn();

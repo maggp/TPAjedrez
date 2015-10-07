@@ -9,8 +9,6 @@ public class Caballo extends Pieza {
 
 	@Override
 	public boolean movimientoValido(Posicion destino) {
-		// TODO Auto-generated method stub
-
 		char columnaOrigen=this.getPosicion().getColumna();
 		int filaOrigen=this.getPosicion().getFila();
 		if(super.esMismaPosicion(columnaOrigen, filaOrigen, destino.getColumna(), destino.getFila())){
@@ -40,7 +38,6 @@ public class Caballo extends Pieza {
 
 	private boolean movimientoCaballo(char columna, int fila,
 			char columnaOrigen, int filaOrigen, int f, int c) {
-		// TODO Auto-generated method stub
 		int COrigen=0;
 		char[] colum={'a','b','c','d','e','f','g'};
 		for(int i=0; i<=7;i++){

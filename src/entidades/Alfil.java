@@ -10,7 +10,6 @@ public class Alfil extends Pieza {
 	//ALFIL se mueve en diagonales 
 		@Override
 		public boolean movimientoValido(Posicion destino) {
-			// TODO Auto-generated method stub
 				char columnaOrigen=this.getPosicion().getColumna();
 				int filaOrigen=this.getPosicion().getFila();
 				//FIJARSE QUE NO SEA LA MISMA POSICION QUE LA INICIAL

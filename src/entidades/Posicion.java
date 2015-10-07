@@ -41,7 +41,6 @@ public class Posicion {
 
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
 		return Character.hashCode(getColumna())*Integer.hashCode(getFila());
 	}
 	

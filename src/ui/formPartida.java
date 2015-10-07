@@ -35,6 +35,10 @@ import java.awt.event.MouseEvent;
 
 public class formPartida extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtJugadorBlancas;
 	private JTextField txtJugadorNegras;
@@ -266,13 +270,14 @@ public class formPartida extends JFrame {
 			ocultarControles();
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Juego Finalizado", JOptionPane.INFORMATION_MESSAGE);
 		} 
-		
 		catch (ApplicationException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.INFORMATION_MESSAGE);
-		} 
-		
+		}
 		catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(null, "Los campos de fila deben ser un numero entero", "Error", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Los campos de fila deben contener un numero entero", "Error", JOptionPane.INFORMATION_MESSAGE);
+		}
+		catch (ArrayIndexOutOfBoundsException e) {
+			JOptionPane.showMessageDialog(null, "Los campos de columna no pueden estar vacíos", "Error", JOptionPane.INFORMATION_MESSAGE);
 		}
 		
 	}

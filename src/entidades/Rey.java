@@ -11,7 +11,6 @@ public class Rey extends Pieza {
 	//REY SE MUEVE FILA, COLUMNA Y DIAGONAL PERO UNA SOLA POSICION
 	@Override
 	public boolean movimientoValido(Posicion destino) {
-		// TODO Auto-generated method stub
 		char columnaOrigen=this.getPosicion().getColumna();
 		int filaOrigen=this.getPosicion().getFila();
 		if(super.esMismaPosicion(columnaOrigen, filaOrigen, destino.getColumna(), destino.getFila())){

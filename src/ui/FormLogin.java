@@ -24,6 +24,10 @@ import java.awt.event.MouseEvent;
 
 public class FormLogin extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtJugador1;
 	private JTextField txtJugador2;

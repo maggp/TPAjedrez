@@ -26,11 +26,11 @@ public class CtrlAjedrez {
 		this.partida=partida;
 	}
 
-	public Jugador identificarJugador(int dni) {
+	public Jugador identificarJugador(int dni) throws ApplicationException {
 		return dj.getByDni(dni);
 	}
 
-	public Partida recuperarPartida(Jugador j1, Jugador j2) {
+	public Partida recuperarPartida(Jugador j1, Jugador j2) throws ApplicationException {
 		partida= dp.recuperarPartida(j1, j2);
 		return partida;
 	}
@@ -40,7 +40,7 @@ public class CtrlAjedrez {
 		this.dp.nuevaPartida(p);
 	}
 
-	public void eliminarPartida(int idPartida) {
+	public void eliminarPartida(int idPartida) throws ApplicationException {
 			dp.eliminarPartida(idPartida);		
 	}
 
@@ -48,7 +48,7 @@ public class CtrlAjedrez {
 		Pieza pieza= partida.getColPiezas().get(posOrigen);
 		try{
 			if (pieza.getColor().equals(partida.getTurno())){
-				if (/*pieza.movimientoValido(posDestino)*/true) {
+				if (pieza.movimientoValido(posDestino)) {
 					Pieza piezaObjetivo = partida.getColPiezas().get(posDestino);
 					if (piezaObjetivo != null) {
 						partida.getColPiezas().remove(posDestino);
@@ -69,7 +69,7 @@ public class CtrlAjedrez {
 						jugadorActual = partida.getJugadorNegras();
 					}
 					dp.actualizarTurno(partida.getIdPartida(),partida.getTurno());
-					if(piezaObjetivo.getTipoPieza().equals("R")) {
+					if(piezaObjetivo!=null&&piezaObjetivo.getTipoPieza().equals("R")) {
 						
 						throw new EndGameException("Felicidades "+ jugadorActual.getNombre()+" "+jugadorActual.getApellido()+" ha ganado la partida!!!", null);
 					}

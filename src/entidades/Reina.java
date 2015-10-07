@@ -11,7 +11,6 @@ public class Reina extends Pieza {
 	//Reina se mueve fila, columna o diagonal
 	@Override
 	public boolean movimientoValido(Posicion destino) {
-		// TODO Auto-generated method stub
 		char columnaOrigen=this.getPosicion().getColumna();
 		int filaOrigen=this.getPosicion().getFila();
 		if(super.esMismaPosicion(columnaOrigen, filaOrigen, destino.getColumna(), destino.getFila())){

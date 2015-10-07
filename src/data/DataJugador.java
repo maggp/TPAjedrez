@@ -1,11 +1,13 @@
 package data;
 
 import java.sql.*;
+
+import appExceptions.ApplicationException;
 import entidades.Jugador;
 
 public class DataJugador {
 
-	public Jugador getByDni(int dni){
+	public Jugador getByDni(int dni) throws ApplicationException{
 		ResultSet rs=null;
 		PreparedStatement stmt=null;
 		Jugador j=null;
@@ -23,8 +25,7 @@ public class DataJugador {
 				
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ApplicationException("Error al recuperar jugador de la base de datos", e);
 		}
 		finally
 		{
@@ -32,8 +33,7 @@ public class DataJugador {
 				if(rs!=null)rs.close();
 				if(stmt!=null) stmt.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new ApplicationException("Error al liberar recursos de la base de datos", e);
 			}
 			FactoryConexion.getInstancia().releaseConn();
 		}

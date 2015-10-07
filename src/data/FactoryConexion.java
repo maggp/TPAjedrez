@@ -3,6 +3,8 @@ package data;
 
 import java.sql.*;
 
+import appExceptions.ApplicationException;
+
 public class FactoryConexion {
 	
 	private String dbDriver="com.mysql.jdbc.Driver";
@@ -36,29 +38,27 @@ public class FactoryConexion {
 	
 	
 	
-	public Connection getConn(){
+	public Connection getConn() throws ApplicationException{
 		try {
 			if(conn==null || conn.isClosed()){
 				conn = DriverManager.getConnection("jdbc:mysql://"+host+":"+port+"/"+db+"?user="+user+"&password="+pass);
 				cantCon++;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ApplicationException("Error al establecer la conexion con la base de datos", e);
 		}
 		return conn;
 	}
 	
 	
-	public void releaseConn(){
+	public void releaseConn() throws ApplicationException{
 		try {
 			cantCon--;
 			if(cantCon==0){
 				conn.close();
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ApplicationException("Error al cerrar la conexion con la base de datos", e);
 		}
 	}
 

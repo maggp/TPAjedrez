@@ -16,7 +16,6 @@ public class Peon  extends Pieza{
 	//PEON Solo hacia adelante si es la primera vez 2 sino uno. Come en diagonal
 	
 	public boolean movimientoValido(Posicion destino) {
-		// TODO Auto-generated method stub
 		int avanza=0;
 		boolean valido=false;
 		char columnaOrigen=this.getPosicion().getColumna();

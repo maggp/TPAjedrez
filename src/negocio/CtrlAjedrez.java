@@ -52,11 +52,13 @@ public class CtrlAjedrez {
 					Pieza piezaObjetivo = partida.getColPiezas().get(posDestino);
 					if (piezaObjetivo != null) {
 							if (!piezaObjetivo.getColor().equals(partida.getTurno())) {
-						partida.getColPiezas().remove(posDestino);
-						//Usamos la posicion z0 para eliminar una pieza sin borrar el registro en la tabla
-						Posicion posEliminado = new Posicion('z', 0);
-						dp.moverPieza(piezaObjetivo, partida, posEliminado );
-					}
+								partida.getColPiezas().remove(posDestino);
+								//Usamos la posicion z0 para eliminar una pieza sin borrar el registro en la tabla
+								Posicion posEliminado = new Posicion('z', 0);
+								dp.moverPieza(piezaObjetivo, partida, posEliminado );
+							} else {
+								throw new ApplicationException("La posición de destino contiene una pieza del mismo jugador que está efectuando el movimiento", null);
+							}
 					}
 					dp.moverPieza(pieza, partida, posDestino);
 					pieza.setPosicion(posDestino);

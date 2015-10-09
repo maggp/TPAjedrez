@@ -51,10 +51,12 @@ public class CtrlAjedrez {
 				if (pieza.movimientoValido(posDestino)) {
 					Pieza piezaObjetivo = partida.getColPiezas().get(posDestino);
 					if (piezaObjetivo != null) {
+							if (!piezaObjetivo.getColor().equals(partida.getTurno())) {
 						partida.getColPiezas().remove(posDestino);
 						//Usamos la posicion z0 para eliminar una pieza sin borrar el registro en la tabla
 						Posicion posEliminado = new Posicion('z', 0);
 						dp.moverPieza(piezaObjetivo, partida, posEliminado );
+					}
 					}
 					dp.moverPieza(pieza, partida, posDestino);
 					pieza.setPosicion(posDestino);

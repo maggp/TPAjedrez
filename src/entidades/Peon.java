@@ -61,21 +61,4 @@ public class Peon  extends Pieza{
 		return valido;
 	    }
 	
-	
-        //metodo para ver si el peon llego al final del tablero para recuperar otra pieza
-		public boolean finalTablero(){
-			int fila=this.getPosicion().getFila();
-			if(getColor()=="blanco"){
-				
-				if(fila==8){
-					return true;
-				}
-			}
-			else{
-				if(fila==1){
-					return true;
-				}
-			}
-			return false;
-		}
 }
